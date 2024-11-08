@@ -2,15 +2,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
 require('dotenv').config(); // Load environment variables from .env file
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.error('Could not connect to MongoDB:', err));
-
 
 const reviewRoutes = require('./routes/reviewsRoutes');
 const userRoutes = require('./routes/userRoutes');
