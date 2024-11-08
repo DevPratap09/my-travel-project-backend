@@ -15,7 +15,7 @@ router.post('/register', async (req, res) => {
   await user.save();
 
   // Generate JWT
-  const token = jwt.sign({ userId: user._id }, 'your_secret_key');
+  const token = jwt.sign({ userId: user._id }, 'process.env.JWT_SECRET');
   res.json({ token });
 });
 
@@ -27,7 +27,7 @@ router.post('/login', async (req, res) => {
     return res.status(401).json({ error: 'Invalid credentials' });
   }
 
-  const token = jwt.sign({ userId: user._id }, 'your_secret_key');
+  const token = jwt.sign({ userId: user._id }, 'process.env.JWT_SECRET');
   res.json({ token });
 });
 
@@ -37,7 +37,7 @@ const authMiddleware = (req, res, next) => {
   if (!token) return res.status(401).json({ error: 'Access denied' });
 
   try {
-    const decoded = jwt.verify(token, 'your_secret_key');
+    const decoded = jwt.verify(token, 'process.env.JWT_SECRET');
     req.user = decoded.userId;
     next();
   } catch (err) {
